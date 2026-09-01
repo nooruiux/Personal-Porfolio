@@ -1,6 +1,6 @@
 import { Section } from "@/components/layout";
 import { Button, Card, Icon, SectionHeading } from "@/components/ui";
-import { Reveal } from "@/components/shared/Reveal";
+import { Reveal, RevealItem, StaggerGroup } from "@/components/shared/Reveal";
 import { site } from "@/data/site";
 import {
   awards,
@@ -9,9 +9,15 @@ import {
   type TimelineEntry,
 } from "@/data/experience";
 
-function TimelineItem({ entry, last }: { entry: TimelineEntry; last: boolean }) {
+function TimelineItem({
+  entry,
+  last,
+}: {
+  entry: TimelineEntry;
+  last: boolean;
+}) {
   return (
-    <li className="relative flex gap-4 pb-8 last:pb-0">
+    <>
       {!last ? (
         <span
           aria-hidden
@@ -22,16 +28,49 @@ function TimelineItem({ entry, last }: { entry: TimelineEntry; last: boolean }) 
         <Icon name={entry.icon} size="sm" color="brand" />
       </span>
       <div className="pt-1">
-        <p className="text-sm font-medium text-text-secondary">{entry.period}</p>
+        <p className="text-sm font-medium text-text-secondary">
+          {entry.period}
+        </p>
         <h4 className="font-heading text-lg font-semibold text-text-primary">
           {entry.role}
         </h4>
         <p className="text-sm font-medium text-brand">{entry.org}</p>
         {entry.description ? (
-          <p className="mt-2 text-sm text-text-secondary">{entry.description}</p>
+          <p className="mt-2 text-sm text-text-secondary">
+            {entry.description}
+          </p>
         ) : null}
       </div>
-    </li>
+    </>
+  );
+}
+
+function TimelineGroup({
+  label,
+  entries,
+}: {
+  label: string;
+  entries: TimelineEntry[];
+}) {
+  return (
+    <div>
+      <Reveal>
+        <h3 className="mb-6 text-sm font-semibold uppercase tracking-[0.14em] text-text-secondary">
+          {label}
+        </h3>
+      </Reveal>
+      <StaggerGroup as="ol" gap={0.07}>
+        {entries.map((entry, i) => (
+          <RevealItem
+            as="li"
+            key={entry.id}
+            className="relative flex gap-4 pb-8 last:pb-0"
+          >
+            <TimelineItem entry={entry} last={i === entries.length - 1} />
+          </RevealItem>
+        ))}
+      </StaggerGroup>
+    </div>
   );
 }
 
@@ -45,46 +84,21 @@ export function Resume() {
 
   return (
     <Section id="resume" aria-label="Résumé">
-      <SectionHeading
-        eyebrow="Résumé"
-        title="Experience & background"
-        description="Four years across product teams and freelance clients."
-      />
+      <Reveal>
+        <SectionHeading
+          eyebrow="Résumé"
+          title="Experience & background"
+          description="Four years across product teams and freelance clients."
+        />
+      </Reveal>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1.4fr_1fr]">
         <div className="flex flex-col gap-10">
-          <Reveal>
-            <h3 className="mb-6 text-sm font-semibold uppercase tracking-[0.14em] text-text-secondary">
-              Experience
-            </h3>
-            <ol>
-              {work.map((entry, i) => (
-                <TimelineItem
-                  key={entry.id}
-                  entry={entry}
-                  last={i === work.length - 1}
-                />
-              ))}
-            </ol>
-          </Reveal>
-
-          <Reveal>
-            <h3 className="mb-6 text-sm font-semibold uppercase tracking-[0.14em] text-text-secondary">
-              Education
-            </h3>
-            <ol>
-              {education.map((entry, i) => (
-                <TimelineItem
-                  key={entry.id}
-                  entry={entry}
-                  last={i === education.length - 1}
-                />
-              ))}
-            </ol>
-          </Reveal>
+          <TimelineGroup label="Experience" entries={work} />
+          <TimelineGroup label="Education" entries={education} />
         </div>
 
-        <Reveal>
+        <Reveal delay={0.1}>
           <Card className="flex flex-col gap-6">
             <div>
               <h3 className="font-heading text-lg font-semibold text-text-primary">

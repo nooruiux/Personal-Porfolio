@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Section } from "@/components/layout";
 import { Badge, Icon, SectionHeading, Tag } from "@/components/ui";
-import { RevealItem, StaggerGroup } from "@/components/shared/Reveal";
+import { Reveal, RevealItem, StaggerGroup } from "@/components/shared/Reveal";
 import { cn } from "@/lib/utils";
 import { featuredProjects, type Project } from "@/data/projects";
 import { site } from "@/data/site";
@@ -78,7 +78,7 @@ export function Projects() {
 
   return (
     <Section id="work" muted aria-label="Selected work">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <Reveal className="flex flex-wrap items-end justify-between gap-4">
         <SectionHeading
           eyebrow="Work"
           title="Selected projects"
@@ -93,7 +93,7 @@ export function Projects() {
           More on Behance
           <Icon name="arrow-up-right" size="sm" />
         </a>
-      </div>
+      </Reveal>
 
       <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {featuredProjects.map((project) => (
