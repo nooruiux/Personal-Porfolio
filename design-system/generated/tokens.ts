@@ -131,6 +131,11 @@ export const tokens = {
       "base": "var(--motion-duration-base)",
       "slow": "var(--motion-duration-slow)"
     },
+    "loop": {
+      "slow": "var(--motion-loop-slow)",
+      "slower": "var(--motion-loop-slower)",
+      "slowest": "var(--motion-loop-slowest)"
+    },
     "ease": {
       "standard": "var(--motion-ease-standard)",
       "entrance": "var(--motion-ease-entrance)"

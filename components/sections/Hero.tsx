@@ -16,16 +16,11 @@ export function Hero() {
       aria-label="Introduction"
       className="relative overflow-hidden pb-16 pt-28 sm:pb-24 sm:pt-36"
     >
-      {/* Decorative background */}
+      {/* Ambient background — three slow-drifting brand blobs + a faint grid. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div
-          className="hero-blob left-[-8%] top-[-10%] h-72 w-72 bg-brand"
-          style={{ animationDelay: "0s" }}
-        />
-        <div
-          className="hero-blob right-[-6%] top-[20%] h-80 w-80 bg-brand-accent"
-          style={{ animationDelay: "-6s" }}
-        />
+        <div className="hero-blob hero-blob--1 left-[-10%] top-[-14%] h-[26rem] w-[26rem] bg-brand" />
+        <div className="hero-blob hero-blob--2 right-[-8%] top-[8%] h-80 w-80 bg-brand-accent" />
+        <div className="hero-blob hero-blob--3 bottom-[-24%] left-1/3 h-[30rem] w-[30rem] bg-brand-primary-dark" />
         <div className="grid-overlay absolute inset-0 opacity-60" />
       </div>
 
