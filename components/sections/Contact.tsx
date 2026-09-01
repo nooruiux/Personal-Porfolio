@@ -13,6 +13,7 @@ import {
   SectionHeading,
   Textarea,
 } from "@/components/ui";
+import { Reveal } from "@/components/shared/Reveal";
 import { site } from "@/data/site";
 
 const schema = z.object({
@@ -49,7 +50,10 @@ export function Contact() {
       if (endpoint) {
         const res = await fetch(endpoint, {
           method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
           body: JSON.stringify(values),
         });
         if (!res.ok) throw new Error("Request failed");
@@ -74,7 +78,7 @@ export function Contact() {
   return (
     <Section id="contact" muted aria-label="Contact">
       <div className="grid gap-12 lg:grid-cols-[1fr_1fr]">
-        <div className="flex flex-col gap-6">
+        <Reveal className="flex flex-col gap-6">
           <SectionHeading
             eyebrow="Contact"
             title="Let's work together"
@@ -83,10 +87,7 @@ export function Contact() {
           <ul className="flex flex-col gap-3 text-text-secondary">
             <li className="flex items-center gap-3">
               <Icon name="mail" size="sm" color="brand" />
-              <a
-                href={`mailto:${site.email}`}
-                className="hover:text-brand"
-              >
+              <a href={`mailto:${site.email}`} className="hover:text-brand">
                 {site.email}
               </a>
             </li>
@@ -110,57 +111,59 @@ export function Contact() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
 
-        <form
-          noValidate
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 rounded-lg border border-border-default bg-surface-card p-6 sm:p-8"
-        >
-          <Input
-            label="Name"
-            required
-            autoComplete="name"
-            error={errors.name?.message}
-            {...register("name")}
-          />
-          <Input
-            label="Email"
-            type="email"
-            required
-            autoComplete="email"
-            error={errors.email?.message}
-            {...register("email")}
-          />
-          <Textarea
-            label="Message"
-            required
-            rows={5}
-            error={errors.message?.message}
-            {...register("message")}
-          />
+        <Reveal delay={0.1}>
+          <form
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 rounded-lg border border-border-default bg-surface-card p-6 sm:p-8"
+          >
+            <Input
+              label="Name"
+              required
+              autoComplete="name"
+              error={errors.name?.message}
+              {...register("name")}
+            />
+            <Input
+              label="Email"
+              type="email"
+              required
+              autoComplete="email"
+              error={errors.email?.message}
+              {...register("email")}
+            />
+            <Textarea
+              label="Message"
+              required
+              rows={5}
+              error={errors.message?.message}
+              {...register("message")}
+            />
 
-          <Button type="submit" disabled={status === "submitting"}>
-            {status === "submitting" ? (
-              <Icon name="loader" size="sm" className="animate-spin" />
-            ) : (
-              <Icon name="send" size="sm" />
-            )}
-            {status === "submitting" ? "Sending…" : "Send message"}
-          </Button>
+            <Button type="submit" disabled={status === "submitting"}>
+              {status === "submitting" ? (
+                <Icon name="loader" size="sm" className="animate-spin" />
+              ) : (
+                <Icon name="send" size="sm" />
+              )}
+              {status === "submitting" ? "Sending…" : "Send message"}
+            </Button>
 
-          <p aria-live="polite" className="min-h-[1.25rem] text-sm">
-            {status === "success" ? (
-              <span className="text-brand">
-                Thanks — your message is on its way.
-              </span>
-            ) : status === "error" ? (
-              <span className="text-brand-accent">
-                Something went wrong. Email me directly at {site.email}.
-              </span>
-            ) : null}
-          </p>
-        </form>
+            <p aria-live="polite" className="min-h-[1.25rem] text-sm">
+              {status === "success" ? (
+                <span className="text-brand">
+                  Thanks — your message is on its way.
+                </span>
+              ) : status === "error" ? (
+                <span className="text-brand-accent">
+                  Something went wrong. Email me directly at {site.email}.
+                </span>
+              ) : null}
+            </p>
+          </form>
+        </Reveal>
       </div>
     </Section>
   );

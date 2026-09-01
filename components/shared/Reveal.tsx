@@ -81,6 +81,8 @@ export interface StaggerGroupProps {
   /** Seconds before the first child animates. */
   delay?: number;
   amount?: number;
+  /** Element to render — use "ol"/"ul" to keep list semantics. Default "div". */
+  as?: "div" | "ol" | "ul";
 }
 
 export function StaggerGroup({
@@ -89,16 +91,22 @@ export function StaggerGroup({
   gap = 0.09,
   delay = 0.04,
   amount = 0.15,
+  as = "div",
 }: StaggerGroupProps) {
   const mounted = useMounted();
   const reduce = useReducedMotion();
 
   if (!mounted || reduce) {
-    return <div className={className}>{children}</div>;
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
   }
 
+  const MotionTag = { div: motion.div, ol: motion.ol, ul: motion.ul }[
+    as
+  ] as typeof motion.div;
+
   return (
-    <motion.div
+    <MotionTag
       className={className}
       variants={staggerVariants}
       initial="hidden"
@@ -107,30 +115,39 @@ export function StaggerGroup({
       transition={{ staggerChildren: gap, delayChildren: delay }}
     >
       {children}
-    </motion.div>
+    </MotionTag>
   );
 }
 
 export interface RevealItemProps {
   children: React.ReactNode;
   className?: string;
+  /** Element to render — use "li" inside a <StaggerGroup as="ol|ul">. Default "div". */
+  as?: "div" | "li";
 }
 
 /**
  * Direct child of a <StaggerGroup>. Renders plain when its group does; inside an
  * animating group it inherits the group's state and animates on its turn.
  */
-export function RevealItem({ children, className }: RevealItemProps) {
+export function RevealItem({
+  children,
+  className,
+  as = "div",
+}: RevealItemProps) {
   const mounted = useMounted();
   const reduce = useReducedMotion();
 
   if (!mounted || reduce) {
-    return <div className={className}>{children}</div>;
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
   }
 
+  const MotionTag = (as === "li" ? motion.li : motion.div) as typeof motion.div;
+
   return (
-    <motion.div className={className} variants={revealVariants}>
+    <MotionTag className={className} variants={revealVariants}>
       {children}
-    </motion.div>
+    </MotionTag>
   );
 }
