@@ -1,6 +1,6 @@
 import { Section } from "@/components/layout";
 import { Card, Icon, SectionHeading, Tag } from "@/components/ui";
-import { Reveal, RevealItem } from "@/components/shared/Reveal";
+import { RevealItem, StaggerGroup } from "@/components/shared/Reveal";
 import { skills } from "@/data/skills";
 
 /**
@@ -15,7 +15,7 @@ export function Skills() {
         description="Four areas I work across — often on the same project, from first sketch to shipped product."
       />
 
-      <Reveal stagger className="mt-12 grid gap-6 sm:grid-cols-2">
+      <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2">
         {skills.map((skill) => (
           <RevealItem key={skill.id}>
             <Card as="article" interactive className="flex h-full flex-col gap-4">
@@ -36,7 +36,7 @@ export function Skills() {
             </Card>
           </RevealItem>
         ))}
-      </Reveal>
+      </StaggerGroup>
     </Section>
   );
 }
