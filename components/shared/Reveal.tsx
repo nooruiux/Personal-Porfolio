@@ -1,7 +1,13 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { revealVariants, staggerVariants } from "@/lib/motion";
+import {
+  revealOffset,
+  revealTiming,
+  revealVariants,
+  staggerVariants,
+  type RevealFrom,
+} from "@/lib/motion";
 import { useMounted } from "@/lib/use-mounted";
 
 /**
@@ -32,6 +38,8 @@ export interface RevealProps {
   delay?: number;
   /** Fraction of the element visible before it triggers (0–1). */
   amount?: number;
+  /** Direction the element travels from. Default "bottom" (fade + rise). */
+  from?: RevealFrom;
 }
 
 export function Reveal({
@@ -39,6 +47,7 @@ export function Reveal({
   className,
   delay = 0,
   amount = 0.2,
+  from = "bottom",
 }: RevealProps) {
   const mounted = useMounted();
   const reduce = useReducedMotion();
@@ -50,7 +59,10 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      variants={revealVariants}
+      variants={{
+        hidden: { opacity: 0, ...revealOffset[from] },
+        visible: { opacity: 1, x: 0, y: 0, transition: revealTiming },
+      }}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount }}
