@@ -1,6 +1,6 @@
 import { Section } from "@/components/layout";
 import { SectionHeading } from "@/components/ui";
-import { Reveal, RevealItem } from "@/components/shared/Reveal";
+import { RevealItem, StaggerGroup } from "@/components/shared/Reveal";
 import { tools } from "@/data/tools";
 
 /**
@@ -15,10 +15,7 @@ export function Tools() {
         description="Proficiency levels are self-assessed, from Noor's CV."
       />
 
-      <Reveal
-        stagger
-        className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-      >
+      <StaggerGroup className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <RevealItem key={tool.id}>
             <div className="flex h-full items-center gap-4 rounded-lg border border-border-default bg-surface-card p-5">
@@ -52,7 +49,7 @@ export function Tools() {
             </div>
           </RevealItem>
         ))}
-      </Reveal>
+      </StaggerGroup>
     </Section>
   );
 }

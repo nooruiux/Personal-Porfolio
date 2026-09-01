@@ -1,44 +1,59 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { revealVariants, staggerContainer } from "@/lib/motion";
-import { useIsClient } from "@/lib/use-is-client";
+import { revealVariants, staggerVariants } from "@/lib/motion";
+import { useMounted } from "@/lib/use-mounted";
 
 /**
- * Reveal — scroll-into-view animation wrapper (fade + rise).
+ * Scroll-reveal primitives (Framer Motion).
  *
- * Renders children statically on the server and during hydration (so content
- * is always in the HTML and there's no mismatch), then animates on scroll once
- * mounted on the client. Honors `prefers-reduced-motion`.
+ * Robustness model — the fallback is always *visible content*:
+ * - Server + hydration render a plain `<div>` (identical markup, no mismatch).
+ * - After mount, users with `prefers-reduced-motion` keep the plain `<div>` —
+ *   nothing depends on Framer's animation loop or IntersectionObserver for them.
+ * - Everyone else gets a `motion.div` that fades + rises as it scrolls into view
+ *   (`whileInView`, once).
+ *
+ * So if JS fails after hydration, an observer never fires, or animation is
+ * frozen, content is still there — it just doesn't animate.
  *
  * @example
- * <Reveal>{card}</Reveal>
- * <Reveal stagger>{items.map((i) => <RevealItem key={i}>…</RevealItem>)}</Reveal>
+ * <Reveal>{block}</Reveal>
+ *
+ * <StaggerGroup className="grid gap-6" gap={0.08}>
+ *   {items.map((i) => <RevealItem key={i.id}>{card(i)}</RevealItem>)}
+ * </StaggerGroup>
  */
+
 export interface RevealProps {
   children: React.ReactNode;
   className?: string;
-  /** Extra delay in seconds before this element animates. */
+  /** Extra seconds of delay before this element animates in. */
   delay?: number;
-  /** Treat children as a list and stagger them. Children should be <RevealItem>. */
-  stagger?: boolean;
+  /** Fraction of the element visible before it triggers (0–1). */
+  amount?: number;
 }
 
-export function Reveal({ children, className, delay = 0, stagger }: RevealProps) {
-  const isClient = useIsClient();
-  const reduceMotion = useReducedMotion();
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  amount = 0.2,
+}: RevealProps) {
+  const mounted = useMounted();
+  const reduce = useReducedMotion();
 
-  if (!isClient || reduceMotion) {
+  if (!mounted || reduce) {
     return <div className={className}>{children}</div>;
   }
 
   return (
     <motion.div
       className={className}
-      variants={stagger ? staggerContainer : revealVariants}
+      variants={revealVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, amount }}
       transition={{ delay }}
     >
       {children}
@@ -46,18 +61,58 @@ export function Reveal({ children, className, delay = 0, stagger }: RevealProps)
   );
 }
 
-/** Direct child of a `<Reveal stagger>` container. */
-export function RevealItem({
-  children,
-  className,
-}: {
+export interface StaggerGroupProps {
   children: React.ReactNode;
   className?: string;
-}) {
-  const isClient = useIsClient();
-  const reduceMotion = useReducedMotion();
+  /** Seconds between each child's entrance. */
+  gap?: number;
+  /** Seconds before the first child animates. */
+  delay?: number;
+  amount?: number;
+}
 
-  if (!isClient || reduceMotion) {
+export function StaggerGroup({
+  children,
+  className,
+  gap = 0.09,
+  delay = 0.04,
+  amount = 0.15,
+}: StaggerGroupProps) {
+  const mounted = useMounted();
+  const reduce = useReducedMotion();
+
+  if (!mounted || reduce) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      className={className}
+      variants={staggerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount }}
+      transition={{ staggerChildren: gap, delayChildren: delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export interface RevealItemProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+/**
+ * Direct child of a <StaggerGroup>. Renders plain when its group does; inside an
+ * animating group it inherits the group's state and animates on its turn.
+ */
+export function RevealItem({ children, className }: RevealItemProps) {
+  const mounted = useMounted();
+  const reduce = useReducedMotion();
+
+  if (!mounted || reduce) {
     return <div className={className}>{children}</div>;
   }
 

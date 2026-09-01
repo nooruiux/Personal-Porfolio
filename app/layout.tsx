@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "../design-system/generated/tokens.css";
 import "./globals.css";
 import { fontVariables } from "@/lib/fonts";
+import { MotionProvider } from "@/components/shared/MotionProvider";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={fontVariables} suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );
