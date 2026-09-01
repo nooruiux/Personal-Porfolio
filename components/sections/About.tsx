@@ -1,26 +1,25 @@
+import Image from "next/image";
 import { Section } from "@/components/layout";
 import { SectionHeading } from "@/components/ui";
 import { Reveal } from "@/components/shared/Reveal";
 import { site } from "@/data/site";
 
 /**
- * About — short bio, photo placeholder, and key stats.
+ * About — short bio, portrait, and key stats.
  */
 export function About() {
   return (
     <Section id="about" aria-label="About Noor">
       <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <Reveal className="order-2 lg:order-1">
-          {/* TODO: replace with a real photo at /public/noor.jpg via next/image */}
           <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-border-default bg-surface-muted">
-            <div className="absolute inset-0 grid place-items-center">
-              <span className="font-heading text-6xl font-bold text-brand">
-                {site.name
-                  .split(" ")
-                  .map((w) => w[0])
-                  .join("")}
-              </span>
-            </div>
+            <Image
+              src="/noor.webp"
+              alt={site.name}
+              fill
+              sizes="(min-width: 640px) 24rem, 80vw"
+              className="object-cover object-bottom"
+            />
           </div>
         </Reveal>
 
