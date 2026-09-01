@@ -2,7 +2,7 @@ import type { BrandName } from "@/components/ui";
 
 /**
  * Site-wide content. Edit copy here — never inside components.
- * Figures and history below are taken from Noor's CV (resume-source.pdf).
+ * Figures and history below are taken from Noor's CV.
  * Items marked `// TODO` still need confirmation.
  */
 
