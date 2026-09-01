@@ -9,11 +9,25 @@ import { Container } from "./Container";
 import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 
+export interface HeaderProps {
+  /**
+   * Target for the "Book Appointment" CTA. Defaults to the in-page Contact
+   * anchor (smooth-scrolls like the other nav links); pass an external
+   * scheduling URL (e.g. Calendly) to point it elsewhere without touching markup.
+   */
+  bookingHref?: string;
+}
+
 /**
- * Header — sticky site navigation with a resume CTA, theme toggle, and an
- * animated mobile drawer. Nav items come from `site.nav`.
+ * Header — sticky site navigation with a résumé download, a "Book Appointment"
+ * CTA (smooth-scrolls to the Contact section by default), a theme toggle, and
+ * an animated mobile drawer. Nav items come from `site.nav`.
+ *
+ * @example
+ * <Header />                              // Book Appointment -> #contact
+ * <Header bookingHref="https://cal.com/noor" />
  */
-export function Header() {
+export function Header({ bookingHref = "#contact" }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -68,9 +82,12 @@ export function Header() {
 
         <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle />
-          <Button href={site.resumePath} download size="sm" variant="primary">
+          <Button href={site.resumePath} download size="sm" variant="outline">
             <Icon name="download" size="sm" />
             Resume
+          </Button>
+          <Button href={bookingHref} size="sm" variant="primary">
+            Book Appointment
           </Button>
         </div>
 
@@ -140,12 +157,20 @@ export function Header() {
               <Button
                 href={site.resumePath}
                 download
-                variant="primary"
+                variant="outline"
                 className="mt-4"
                 onClick={() => setOpen(false)}
               >
                 <Icon name="download" size="sm" />
                 Download Resume
+              </Button>
+              <Button
+                href={bookingHref}
+                variant="primary"
+                className="mt-2"
+                onClick={() => setOpen(false)}
+              >
+                Book Appointment
               </Button>
             </motion.div>
           </motion.div>
