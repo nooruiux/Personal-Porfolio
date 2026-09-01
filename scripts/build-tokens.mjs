@@ -98,6 +98,8 @@ for (const [k, tok] of entries(t.shadow))
 // Motion
 for (const [k, tok] of entries(t.motion.duration))
   rootLines.push([`--motion-duration-${kebab(k)}`, val(tok)]);
+for (const [k, tok] of entries(t.motion.loop))
+  rootLines.push([`--motion-loop-${kebab(k)}`, val(tok)]);
 for (const [k, tok] of entries(t.motion.ease))
   rootLines.push([`--motion-ease-${kebab(k)}`, bezier(val(tok))]);
 
@@ -178,6 +180,7 @@ const tsObj = {
   shadow: mapVars(t.shadow, "--shadow"),
   motion: {
     duration: mapVars(t.motion.duration, "--motion-duration"),
+    loop: mapVars(t.motion.loop, "--motion-loop"),
     ease: mapVars(t.motion.ease, "--motion-ease"),
   },
   iconSize: mapVars(t.icon.size, "--icon-size"),

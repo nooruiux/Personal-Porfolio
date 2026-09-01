@@ -70,14 +70,28 @@
     animation: rise var(--motion-duration-slow) var(--motion-ease-entrance) both;
   }
 
-  /* Decorative gradient blobs for the hero. */
+  /* Ambient gradient blobs for the hero — slow, overlapping drift that reads
+     as a living gradient mesh rather than an animation. Timing from
+     motion.loop.* tokens; frozen by the reduced-motion media query below. */
   .hero-blob {
     position: absolute;
     border-radius: var(--radius-full);
-    filter: blur(72px);
-    opacity: 0.55;
+    filter: blur(80px);
+    opacity: 0.4;
     will-change: transform;
-    animation: hero-float 14s var(--motion-ease-standard) infinite alternate;
+  }
+  .hero-blob--1 {
+    animation: hero-drift-1 var(--motion-loop-slow) var(--motion-ease-standard)
+      infinite;
+  }
+  .hero-blob--2 {
+    animation: hero-drift-2 var(--motion-loop-slower) var(--motion-ease-standard)
+      infinite;
+  }
+  .hero-blob--3 {
+    opacity: 0.28;
+    animation: hero-drift-3 var(--motion-loop-slowest)
+      var(--motion-ease-standard) infinite;
   }
 
   /* Faint dotted grid overlay. */
@@ -103,12 +117,39 @@
   }
 }
 
-@keyframes hero-float {
-  from {
+@keyframes hero-drift-1 {
+  0%,
+  100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
-  to {
-    transform: translate3d(0, -24px, 0) scale(1.08);
+  33% {
+    transform: translate3d(6%, 8%, 0) scale(1.14);
+  }
+  66% {
+    transform: translate3d(-4%, 4%, 0) scale(0.96);
+  }
+}
+
+@keyframes hero-drift-2 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  40% {
+    transform: translate3d(-8%, 6%, 0) scale(1.1);
+  }
+  70% {
+    transform: translate3d(-3%, -6%, 0) scale(0.94);
+  }
+}
+
+@keyframes hero-drift-3 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(5%, -7%, 0) scale(1.18);
   }
 }
 

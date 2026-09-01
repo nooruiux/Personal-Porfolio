@@ -66,6 +66,9 @@
   --motion-duration-fast: 150ms;
   --motion-duration-base: 250ms;
   --motion-duration-slow: 400ms;
+  --motion-loop-slow: 18s;
+  --motion-loop-slower: 26s;
+  --motion-loop-slowest: 34s;
   --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
   --icon-size-sm: 16px;
