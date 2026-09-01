@@ -72,7 +72,7 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition duration-fast ease-standard hover:bg-surface-muted hover:text-text-primary"
+                className="relative rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition duration-fast ease-standard after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-brand after:transition-transform after:duration-base after:ease-standard after:content-[''] hover:text-text-primary hover:after:scale-x-100 focus-visible:after:scale-x-100"
               >
                 {item.label}
               </Link>
