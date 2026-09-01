@@ -33,8 +33,20 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
+    // rAF-coalesced: a burst of scroll events schedules at most one state check
+    // per frame. `pending` also guards against redundant work when scrollY
+    // stays on one side of the threshold.
+    let pending = false;
+    const sync = () => {
+      pending = false;
+      setScrolled(window.scrollY > 8);
+    };
+    const onScroll = () => {
+      if (pending) return;
+      pending = true;
+      window.requestAnimationFrame(sync);
+    };
+    sync();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -54,11 +66,17 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
       className={cn(
         "sticky top-0 z-50 border-b transition duration-base ease-standard",
         scrolled
-          ? "border-border-default bg-surface-scrim backdrop-blur-md"
-          : "border-transparent bg-transparent",
+          ? "border-border-default bg-surface-scrim shadow-sm backdrop-blur-md"
+          : "border-transparent bg-transparent shadow-none",
       )}
     >
-      <Container as="nav" className="flex h-16 items-center justify-between gap-4">
+      <Container
+        as="nav"
+        className={cn(
+          "flex items-center justify-between gap-4 transition-[height] duration-base ease-standard",
+          scrolled ? "h-14" : "h-16",
+        )}
+      >
         <Link
           href="#top"
           className="font-heading text-lg font-bold tracking-tight text-text-primary"
