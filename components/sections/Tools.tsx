@@ -1,6 +1,6 @@
 import { Section } from "@/components/layout";
 import { SectionHeading } from "@/components/ui";
-import { RevealItem, StaggerGroup } from "@/components/shared/Reveal";
+import { Reveal, RevealItem, StaggerGroup } from "@/components/shared/Reveal";
 import { tools } from "@/data/tools";
 
 /**
@@ -9,13 +9,18 @@ import { tools } from "@/data/tools";
 export function Tools() {
   return (
     <Section id="tools" aria-label="Tools">
-      <SectionHeading
-        eyebrow="Toolbox"
-        title="Tools I design with"
-        description="Proficiency levels are self-assessed, from Noor's CV."
-      />
+      <Reveal>
+        <SectionHeading
+          eyebrow="Toolbox"
+          title="Tools I design with"
+          description="Proficiency levels are self-assessed, from Noor's CV."
+        />
+      </Reveal>
 
-      <StaggerGroup className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <StaggerGroup
+        gap={0.06}
+        className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {tools.map((tool) => (
           <RevealItem key={tool.id}>
             <div className="flex h-full items-center gap-4 rounded-lg border border-border-default bg-surface-card p-5">

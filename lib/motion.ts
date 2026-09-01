@@ -26,14 +26,22 @@ export const transition = {
   slow: { duration: duration.slow, ease: standard } satisfies Transition,
 };
 
+/** Shared timing for every reveal. */
+export const revealTiming: Transition = { duration: duration.slow, ease: entrance };
+
+/** Distance (px) a revealing element travels, by direction. */
+export const revealOffset = {
+  bottom: { y: 24 },
+  left: { x: -28 },
+  right: { x: 28 },
+} as const;
+
+export type RevealFrom = keyof typeof revealOffset;
+
 /** Scroll-reveal item: fade + rise. Used by <Reveal> and each <RevealItem>. */
 export const revealVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: duration.slow, ease: entrance },
-  },
+  hidden: { opacity: 0, ...revealOffset.bottom },
+  visible: { opacity: 1, x: 0, y: 0, transition: revealTiming },
 };
 
 /**

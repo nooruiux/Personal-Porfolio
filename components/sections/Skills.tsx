@@ -1,6 +1,6 @@
 import { Section } from "@/components/layout";
 import { Card, Icon, SectionHeading, Tag } from "@/components/ui";
-import { RevealItem, StaggerGroup } from "@/components/shared/Reveal";
+import { Reveal, RevealItem, StaggerGroup } from "@/components/shared/Reveal";
 import { skills } from "@/data/skills";
 
 /**
@@ -9,13 +9,15 @@ import { skills } from "@/data/skills";
 export function Skills() {
   return (
     <Section id="skills" muted aria-label="Skills and services">
-      <SectionHeading
-        eyebrow="What I do"
-        title="Skills & services"
-        description="Four areas I work across — often on the same project, from first sketch to shipped product."
-      />
+      <Reveal>
+        <SectionHeading
+          eyebrow="What I do"
+          title="Skills & services"
+          description="Four areas I work across — often on the same project, from first sketch to shipped product."
+        />
+      </Reveal>
 
-      <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2">
+      <StaggerGroup gap={0.08} className="mt-12 grid gap-6 sm:grid-cols-2">
         {skills.map((skill) => (
           <RevealItem key={skill.id}>
             <Card as="article" interactive className="flex h-full flex-col gap-4">
