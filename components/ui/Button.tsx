@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  * <Button href="/resume.pdf" download variant="outline">Download Resume</Button>
  */
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition duration-base ease-standard focus-visible:outline-none active:translate-y-px disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition duration-base ease-standard will-change-transform hover:-translate-y-0.5 focus-visible:outline-none active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0",
   {
     variants: {
       variant: {

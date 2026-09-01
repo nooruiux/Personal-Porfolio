@@ -29,7 +29,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border-default text-text-secondary transition duration-fast ease-standard hover:border-brand hover:text-brand"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border-default text-text-secondary transition duration-fast ease-standard hover:-translate-y-0.5 hover:border-brand hover:text-brand"
               >
                 <BrandIcon name={social.brand} size="md" />
               </a>

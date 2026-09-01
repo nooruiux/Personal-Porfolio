@@ -19,7 +19,7 @@ export const cardVariants = cva(
         lg: "p-8",
       },
       interactive: {
-        true: "hover:-translate-y-1 hover:border-brand hover:shadow-glow",
+        true: "will-change-transform hover:-translate-y-1 hover:border-brand hover:shadow-glow",
         false: "",
       },
     },
