@@ -94,6 +94,23 @@
       var(--motion-ease-standard) infinite;
   }
 
+  /* Chamfer Button shape — cuts all 4 corners at an angle (radius.chamfer)
+     instead of rounding them. clip-path masks the full box, including
+     box-shadow, so glow/elevation reads slightly tighter on this shape than
+     on the pill — a known, accepted tradeoff of using clip-path this way. */
+  .chamfer-btn {
+    clip-path: polygon(
+      var(--radius-chamfer) 0,
+      calc(100% - var(--radius-chamfer)) 0,
+      100% var(--radius-chamfer),
+      100% calc(100% - var(--radius-chamfer)),
+      calc(100% - var(--radius-chamfer)) 100%,
+      var(--radius-chamfer) 100%,
+      0 calc(100% - var(--radius-chamfer)),
+      0 var(--radius-chamfer)
+    );
+  }
+
   /* Faint dotted grid overlay. */
   .grid-overlay {
     background-image: radial-gradient(

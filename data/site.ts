@@ -13,11 +13,18 @@ export const site = {
   // Person.jobTitle, the OG image, and the footer all pull from this, so it
   // stays a short job-title-style string (not the long Hero headline below).
   role: "UI/UX Designer & Web Developer",
-  // The Hero's large headline. Deliberately a separate field from `role`:
-  // this is long, service-list marketing copy meant to be read as a big
-  // headline, not reused anywhere a short label is expected.
-  heroHeadline:
-    "Website, Webflow, Framer, WordPress & Product Design for Startups & B2B",
+  // The Hero's large headline, pre-broken into "staircase" lines (each line
+  // gets progressively more left-indent in the Hero; the last is emphasized
+  // in brand purple). Deliberately a separate field from `role`: this is
+  // long, service-list marketing copy meant to be read as a big headline,
+  // not reused anywhere a short label is expected.
+  heroHeadlineLines: [
+    "Website, Webflow,",
+    "Framer, WordPress",
+    "& Product Design",
+    "For Startups",
+    "& B2B",
+  ],
   // Subheadline directly below heroHeadline in the Hero (also reused as the
   // OG image's supporting line).
   tagline:
