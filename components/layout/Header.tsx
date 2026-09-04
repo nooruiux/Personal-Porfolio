@@ -104,7 +104,7 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
             <Icon name="download" size="sm" />
             Resume
           </Button>
-          <Button href={bookingHref} size="sm" variant="primary">
+          <Button href={bookingHref} size="sm" variant="primary" arrow>
             Book Appointment
           </Button>
         </div>
@@ -185,6 +185,7 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
               <Button
                 href={bookingHref}
                 variant="primary"
+                arrow
                 className="mt-2"
                 onClick={() => setOpen(false)}
               >

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { Icon } from "./Icon";
 
 /**
  * Button — the single button/CTA primitive.
@@ -9,19 +10,26 @@ import { cn } from "@/lib/utils";
  * dev can add or restyle a variant in one place. All colors, radii, shadows and
  * motion come from design tokens via Tailwind.
  *
+ * `variant="primary"` is a gradient pill (design-system/tokens.json ->
+ * `gradient.primaryCta`). Pass `arrow` to append the circular trailing-arrow
+ * badge from the reference design — used on the two CTA buttons (Header's
+ * "Book Appointment", Hero's "View Work"). Leave it off on primary buttons
+ * that already carry their own meaningful icon (Download Resume, Send
+ * message) so icons don't double up.
+ *
  * Renders a `<button>` by default, or an anchor/`next/link` when `href` is set.
  *
  * @example
- * <Button variant="primary" size="lg">View Work</Button>
+ * <Button variant="primary" size="lg" arrow>View Work</Button>
  * <Button href="/resume.pdf" download variant="outline">Download Resume</Button>
  */
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition duration-base ease-standard will-change-transform hover:-translate-y-0.5 focus-visible:outline-none active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition duration-base ease-standard will-change-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface-bg active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0",
   {
     variants: {
       variant: {
         primary:
-          "bg-brand text-brand-on-brand shadow-md hover:bg-brand-primary-dark hover:shadow-glow",
+          "rounded-full bg-primary-cta text-brand-on-brand shadow-md hover:scale-[1.02] hover:shadow-glow",
         secondary:
           "bg-surface-muted text-text-primary hover:bg-border-default",
         outline:
@@ -41,6 +49,8 @@ export const buttonVariants = cva(
 type CommonProps = VariantProps<typeof buttonVariants> & {
   className?: string;
   children: React.ReactNode;
+  /** Append the circular trailing-arrow badge (primary CTA style). */
+  arrow?: boolean;
 };
 
 type ButtonAsButton = CommonProps &
@@ -55,14 +65,28 @@ type ButtonAsLink = CommonProps &
 
 export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
+/** Semi-transparent white circle + diagonal arrow, for `<Button arrow>`. */
+function ArrowBadge() {
+  return (
+    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/20 transition duration-base ease-standard group-hover:translate-x-0.5 group-hover:bg-white/30">
+      <Icon name="arrow-up-right" size="sm" color="on-brand" />
+    </span>
+  );
+}
+
 export function Button({
   variant,
   size,
+  arrow,
   className,
   children,
   ...props
 }: ButtonProps) {
-  const classes = cn(buttonVariants({ variant, size }), className);
+  const classes = cn(
+    buttonVariants({ variant, size }),
+    arrow && "group pr-1.5",
+    className,
+  );
 
   if (typeof props.href === "string") {
     const { href, ...rest } = props as ButtonAsLink;
@@ -73,12 +97,14 @@ export function Button({
       return (
         <a href={href} className={classes} {...rest}>
           {children}
+          {arrow ? <ArrowBadge /> : null}
         </a>
       );
     }
     return (
       <Link href={href} className={classes} {...rest}>
         {children}
+        {arrow ? <ArrowBadge /> : null}
       </Link>
     );
   }
@@ -86,6 +112,7 @@ export function Button({
   return (
     <button className={classes} {...(props as ButtonAsButton)}>
       {children}
+      {arrow ? <ArrowBadge /> : null}
     </button>
   );
 }

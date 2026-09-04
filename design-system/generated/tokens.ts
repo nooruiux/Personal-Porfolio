@@ -125,6 +125,9 @@ export const tokens = {
     "lg": "var(--shadow-lg)",
     "glow": "var(--shadow-glow)"
   },
+  "gradient": {
+    "primaryCta": "var(--gradient-primary-cta)"
+  },
   "motion": {
     "duration": {
       "fast": "var(--motion-duration-fast)",
