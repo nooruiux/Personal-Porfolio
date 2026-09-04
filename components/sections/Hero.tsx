@@ -73,7 +73,7 @@ export function Hero() {
             className="animate-rise mt-9 flex flex-col gap-3 sm:flex-row"
             style={{ animationDelay: "240ms" }}
           >
-            <Button href="#work" size="lg" arrow>
+            <Button href="#work" size="lg" shape="chamfer" arrow>
               View Work
             </Button>
             <Button href={site.resumePath} download size="lg" variant="outline">

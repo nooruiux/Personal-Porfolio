@@ -129,7 +129,7 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
           {/* Right: theme toggle + Book Appointment — nothing else. Desktop only. */}
           <div className="hidden shrink-0 items-center gap-2 lg:flex">
             <ThemeToggle />
-            <Button href={bookingHref} size="sm" variant="primary" arrow>
+            <Button href={bookingHref} size="sm" variant="primary" shape="chamfer" arrow>
               Book Appointment
             </Button>
           </div>
@@ -209,6 +209,7 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
               <Button
                 href={bookingHref}
                 variant="primary"
+                shape="chamfer"
                 arrow
                 className="mt-4"
                 onClick={() => setOpen(false)}
