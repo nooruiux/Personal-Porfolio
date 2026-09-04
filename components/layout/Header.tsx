@@ -19,9 +19,15 @@ export interface HeaderProps {
 }
 
 /**
- * Header — sticky site navigation with a résumé download, a "Book Appointment"
- * CTA (smooth-scrolls to the Contact section by default), a theme toggle, and
- * an animated mobile drawer. Nav items come from `site.nav`.
+ * Header — a floating pill-shaped nav bar (logo left, links centered, theme
+ * toggle + "Book Appointment" CTA right) that escalates from a plain card to
+ * a condensed, frosted, shadowed pill on scroll. Nav items come from
+ * `site.nav`. Mobile collapses the links into the existing hamburger/drawer;
+ * the theme toggle lives in the drawer there, so the mobile bar stays to
+ * logo + CTA + hamburger.
+ *
+ * There is no Resume link or download button anywhere in this component —
+ * the Résumé section owns its own download button.
  *
  * @example
  * <Header />                              // Book Appointment -> #contact
@@ -62,72 +68,76 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b transition duration-base ease-standard",
-        scrolled
-          ? "border-border-default bg-surface-scrim shadow-sm backdrop-blur-md"
-          : "border-transparent bg-transparent shadow-none",
-      )}
-    >
-      <Container
-        as="nav"
-        className={cn(
-          "flex items-center justify-between gap-4 transition-[height] duration-base ease-standard",
-          scrolled ? "h-14" : "h-16",
-        )}
-      >
-        <Link
-          href="#top"
-          className="font-heading text-lg font-bold tracking-tight text-text-primary"
+    <header className="sticky top-0 z-50 pt-4">
+      <Container>
+        <nav
+          className={cn(
+            "relative mx-auto flex w-full max-w-5xl items-center justify-between gap-4 rounded-full border px-4 transition duration-base ease-standard sm:px-6",
+            scrolled
+              ? "h-14 border-border-default bg-surface-scrim shadow-md backdrop-blur-md"
+              : "h-16 border-border-default bg-surface-card shadow-sm",
+          )}
         >
-          {site.shortName}
-          <span className="text-brand">.</span>
-        </Link>
-
-        <ul className="hidden items-center gap-1 md:flex">
-          {site.nav.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="relative rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition duration-fast ease-standard after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-brand after:transition-transform after:duration-base after:ease-standard after:content-[''] hover:text-text-primary hover:after:scale-x-100 focus-visible:after:scale-x-100"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="hidden items-center gap-2 md:flex">
-          <ThemeToggle />
-          <Button href={site.resumePath} download size="sm" variant="outline">
-            <Icon name="download" size="sm" />
-            Resume
-          </Button>
-          <Button href={bookingHref} size="sm" variant="primary" arrow>
-            Book Appointment
-          </Button>
-        </div>
-
-        <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border-default text-text-primary"
+          {/* Left: logo — always visible */}
+          <Link
+            href="#top"
+            className="shrink-0 font-heading text-lg font-bold tracking-tight text-text-primary"
           >
-            <Icon name="menu" size="md" />
-          </button>
-        </div>
+            {site.shortName}
+            <span className="text-brand">.</span>
+          </Link>
+
+          {/* Center: nav links, dot-separated, truly centered regardless of
+              how wide the left/right zones are. Desktop only. */}
+          <ul className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-1 lg:flex">
+            {site.nav.map((item, i) => (
+              <li key={item.href} className="flex items-center gap-1">
+                {i > 0 ? (
+                  <span aria-hidden="true" className="text-sm text-text-secondary">
+                    ·
+                  </span>
+                ) : null}
+                <Link
+                  href={item.href}
+                  className="relative rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition duration-fast ease-standard after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-brand after:transition-transform after:duration-base after:ease-standard after:content-[''] hover:text-text-primary hover:after:scale-x-100 focus-visible:after:scale-x-100"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Right: theme toggle + Book Appointment — nothing else. Desktop only. */}
+          <div className="hidden shrink-0 items-center gap-2 lg:flex">
+            <ThemeToggle />
+            <Button href={bookingHref} size="sm" variant="primary" arrow>
+              Book Appointment
+            </Button>
+          </div>
+
+          {/* Mobile: CTA + hamburger stay visible in the bar at all times. */}
+          <div className="flex shrink-0 items-center gap-2 lg:hidden">
+            <Button href={bookingHref} size="sm" variant="primary" arrow>
+              Book Appointment
+            </Button>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border-default text-text-primary"
+            >
+              <Icon name="menu" size="md" />
+            </button>
+          </div>
+        </nav>
       </Container>
 
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-50 md:hidden"
+            className="fixed inset-0 z-50 lg:hidden"
             initial={reduceMotion ? undefined : { opacity: 0 }}
             animate={reduceMotion ? undefined : { opacity: 1 }}
             exit={reduceMotion ? undefined : { opacity: 0 }}
@@ -151,14 +161,17 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
                   {site.shortName}
                   <span className="text-brand">.</span>
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  aria-label="Close menu"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border-default text-text-primary"
-                >
-                  <Icon name="x" size="md" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    aria-label="Close menu"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border-default text-text-primary"
+                  >
+                    <Icon name="x" size="md" />
+                  </button>
+                </div>
               </div>
 
               {site.nav.map((item) => (
@@ -173,20 +186,10 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
               ))}
 
               <Button
-                href={site.resumePath}
-                download
-                variant="outline"
-                className="mt-4"
-                onClick={() => setOpen(false)}
-              >
-                <Icon name="download" size="sm" />
-                Download Resume
-              </Button>
-              <Button
                 href={bookingHref}
                 variant="primary"
                 arrow
-                className="mt-2"
+                className="mt-4"
                 onClick={() => setOpen(false)}
               >
                 Book Appointment

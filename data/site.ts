@@ -38,11 +38,12 @@ export const site = {
   ],
 
   // Header / in-page navigation. `href` values map to <Section id> values.
+  // Resume deliberately excluded — the navbar has no Resume link/button;
+  // the Résumé section's own download button is the only place it lives.
   nav: [
     { label: "About", href: "#about" },
     { label: "Skills", href: "#skills" },
     { label: "Work", href: "#work" },
-    { label: "Resume", href: "#resume" },
     { label: "Contact", href: "#contact" },
   ],
 } as const;
