@@ -18,13 +18,25 @@ export interface HeaderProps {
   bookingHref?: string;
 }
 
+/** Small dark circle badge + white rotated dash, next to the wordmark. */
+function LogoMark() {
+  return (
+    <span
+      aria-hidden="true"
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-primary-dark"
+    >
+      <span className="h-1 w-4 -rotate-45 rounded-full bg-white" />
+    </span>
+  );
+}
+
 /**
- * Header — a floating pill-shaped nav bar (logo left, links centered, theme
- * toggle + "Book Appointment" CTA right) that escalates from a plain card to
- * a condensed, frosted, shadowed pill on scroll. Nav items come from
- * `site.nav`. Mobile collapses the links into the existing hamburger/drawer;
- * the theme toggle lives in the drawer there, so the mobile bar stays to
- * logo + CTA + hamburger.
+ * Header — a floating pill-shaped nav bar (logo mark + wordmark left, links
+ * centered, theme toggle + "Book Appointment" CTA right) that escalates from
+ * a plain card to a condensed, frosted, shadowed pill on scroll. Nav items
+ * come from `site.nav`. Mobile collapses to logo + hamburger only — nav links
+ * and the CTA live in the existing drawer there (which also holds the theme
+ * toggle).
  *
  * There is no Resume link or download button anywhere in this component —
  * the Résumé section owns its own download button.
@@ -81,17 +93,24 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
           {/* Left: logo — always visible */}
           <Link
             href="#top"
-            className="shrink-0 font-heading text-lg font-bold tracking-tight text-text-primary"
+            className="flex shrink-0 items-center gap-2.5 font-heading text-lg font-bold tracking-tight text-text-primary"
           >
-            {site.shortName}
-            <span className="text-brand">.</span>
+            <LogoMark />
+            <span>
+              {site.shortName}
+              <span className="text-brand">.</span>
+            </span>
           </Link>
 
           {/* Center: nav links, dot-separated, truly centered regardless of
-              how wide the left/right zones are. Desktop only. */}
-          <ul className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-1 lg:flex">
+              how wide the left/right zones are. Desktop only. Bold uppercase
+              tracked labels, per the reference's nav treatment (fluid
+              clamp() size — deliberately not a token; see globals.css note
+              near .chamfer-btn for the project's precedent on one-off
+              decorative values like this). */}
+          <ul className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-3 lg:flex">
             {site.nav.map((item, i) => (
-              <li key={item.href} className="flex items-center gap-1">
+              <li key={item.href} className="flex items-center gap-3">
                 {i > 0 ? (
                   <span aria-hidden="true" className="text-sm text-text-secondary">
                     ·
@@ -99,7 +118,7 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
                 ) : null}
                 <Link
                   href={item.href}
-                  className="relative rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition duration-fast ease-standard after:absolute after:inset-x-3 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-brand after:transition-transform after:duration-base after:ease-standard after:content-[''] hover:text-text-primary hover:after:scale-x-100 focus-visible:after:scale-x-100"
+                  className="relative rounded-md px-1 py-2 text-[clamp(0.75rem,0.6rem+0.4vw,0.9375rem)] font-bold uppercase tracking-[0.06em] text-text-secondary transition duration-fast ease-standard after:absolute after:inset-x-1 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-brand after:transition-transform after:duration-base after:ease-standard after:content-[''] hover:text-text-primary hover:after:scale-x-100 focus-visible:after:scale-x-100"
                 >
                   {item.label}
                 </Link>
@@ -115,11 +134,10 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
             </Button>
           </div>
 
-          {/* Mobile: CTA + hamburger stay visible in the bar at all times. */}
-          <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            <Button href={bookingHref} size="sm" variant="primary" arrow>
-              Book Appointment
-            </Button>
+          {/* Mobile: hamburger replaces both the nav links and the CTA —
+              both live in the drawer (which already has its own Book
+              Appointment button + the theme toggle). */}
+          <div className="flex shrink-0 items-center lg:hidden">
             <button
               type="button"
               onClick={() => setOpen(true)}
@@ -157,9 +175,12 @@ export function Header({ bookingHref = "#contact" }: HeaderProps) {
               transition={{ type: "tween", duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             >
               <div className="mb-4 flex items-center justify-between">
-                <span className="font-heading text-lg font-bold text-text-primary">
-                  {site.shortName}
-                  <span className="text-brand">.</span>
+                <span className="flex items-center gap-2.5 font-heading text-lg font-bold text-text-primary">
+                  <LogoMark />
+                  <span>
+                    {site.shortName}
+                    <span className="text-brand">.</span>
+                  </span>
                 </span>
                 <div className="flex items-center gap-2">
                   <ThemeToggle />

@@ -117,7 +117,8 @@ export const tokens = {
     "sm": "var(--radius-sm)",
     "md": "var(--radius-md)",
     "lg": "var(--radius-lg)",
-    "full": "var(--radius-full)"
+    "full": "var(--radius-full)",
+    "chamfer": "var(--radius-chamfer)"
   },
   "shadow": {
     "sm": "var(--shadow-sm)",

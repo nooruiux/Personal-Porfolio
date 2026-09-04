@@ -1,11 +1,20 @@
 import { Button, Icon } from "@/components/ui";
 import { Container } from "@/components/layout";
 import { site } from "@/data/site";
+import { cn } from "@/lib/utils";
 
 /**
- * Hero — centered intro block (badge, headline, subheadline, two CTAs) over a
- * soft animated purple gradient + dotted grid. Visual hierarchy: badge ->
- * large headline (the page's <h1>) -> subheadline -> CTAs.
+ * Left-indent step per headline line index — a "staircase" cascade. Capped at
+ * 5 entries (site.heroHeadlineLines' current length); disabled below `sm` so
+ * the indent doesn't eat into the already-narrow mobile width.
+ */
+const STAIRCASE_INDENTS = ["", "sm:ml-4", "sm:ml-8", "sm:ml-12", "sm:ml-16"];
+
+/**
+ * Hero — left-aligned intro block (badge, staircase headline, subheadline,
+ * two CTAs) over a soft animated purple gradient + dotted grid. Visual
+ * hierarchy: badge -> large staircase headline (the page's <h1>, each line
+ * progressively indented, last line in brand purple) -> subheadline -> CTAs.
  *
  * Content is server-rendered and animated in with a pure-CSS entrance
  * (`.animate-rise`) — no JS, no layout shift, visible without hydration.
@@ -26,7 +35,7 @@ export function Hero() {
       </div>
 
       <Container>
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+        <div className="flex max-w-3xl flex-col items-start text-left">
           <span
             className="animate-rise inline-flex items-center gap-2 rounded-full border border-border-default bg-surface-card px-4 py-1.5 text-sm font-medium text-text-secondary"
             style={{ animationDelay: "0ms" }}
@@ -36,10 +45,21 @@ export function Hero() {
           </span>
 
           <h1
-            className="animate-rise mt-5 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl"
+            className="animate-rise mt-5 text-3xl font-bold uppercase leading-none tracking-tight text-text-primary sm:text-4xl"
             style={{ animationDelay: "80ms" }}
           >
-            {site.heroHeadline}
+            {site.heroHeadlineLines.map((line, i) => (
+              <span
+                key={line}
+                className={cn(
+                  "block py-1",
+                  STAIRCASE_INDENTS[i],
+                  i === site.heroHeadlineLines.length - 1 && "text-brand",
+                )}
+              >
+                {line}
+              </span>
+            ))}
           </h1>
 
           <p

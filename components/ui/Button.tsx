@@ -17,11 +17,18 @@ import { Icon } from "./Icon";
  * that already carry their own meaningful icon (Download Resume, Send
  * message) so icons don't double up.
  *
+ * `shape` is an independent, opt-in axis (no default — every existing button
+ * is unaffected unless you pass it): `"pill"` forces full rounding on any
+ * variant, `"chamfer"` clips all 4 corners at an angle instead
+ * (design-system/tokens.json -> `radius.chamfer`, see `.chamfer-btn` in
+ * globals.css) for a sharper, more technical look.
+ *
  * Renders a `<button>` by default, or an anchor/`next/link` when `href` is set.
  *
  * @example
  * <Button variant="primary" size="lg" arrow>View Work</Button>
  * <Button href="/resume.pdf" download variant="outline">Download Resume</Button>
+ * <Button variant="primary" shape="chamfer" arrow>Book Appointment</Button>
  */
 export const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold transition duration-base ease-standard will-change-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface-bg active:translate-y-0 disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0",
@@ -40,6 +47,10 @@ export const buttonVariants = cva(
         sm: "h-9 px-4 text-sm",
         md: "h-11 px-5 text-base",
         lg: "h-12 px-7 text-base",
+      },
+      shape: {
+        pill: "rounded-full",
+        chamfer: "chamfer-btn rounded-none",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },
@@ -77,13 +88,14 @@ function ArrowBadge() {
 export function Button({
   variant,
   size,
+  shape,
   arrow,
   className,
   children,
   ...props
 }: ButtonProps) {
   const classes = cn(
-    buttonVariants({ variant, size }),
+    buttonVariants({ variant, size, shape }),
     arrow && "group pr-1.5",
     className,
   );
