@@ -3,10 +3,9 @@ import { Container } from "@/components/layout";
 import { site } from "@/data/site";
 
 /**
- * Hero — left-aligned intro block (name label, role headline, tagline, two
- * CTAs) over a soft animated purple gradient + dotted grid. Visual hierarchy:
- * small name label -> large role headline (the page's <h1>) -> subheadline ->
- * CTAs.
+ * Hero — centered intro block (badge, headline, subheadline, two CTAs) over a
+ * soft animated purple gradient + dotted grid. Visual hierarchy: badge ->
+ * large headline (the page's <h1>) -> subheadline -> CTAs.
  *
  * Content is server-rendered and animated in with a pure-CSS entrance
  * (`.animate-rise`) — no JS, no layout shift, visible without hydration.
@@ -27,7 +26,7 @@ export function Hero() {
       </div>
 
       <Container>
-        <div className="flex max-w-3xl flex-col items-start text-left">
+        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
           <span
             className="animate-rise inline-flex items-center gap-2 rounded-full border border-border-default bg-surface-card px-4 py-1.5 text-sm font-medium text-text-secondary"
             style={{ animationDelay: "0ms" }}
@@ -36,26 +35,16 @@ export function Hero() {
             Available for freelance &amp; full-time work
           </span>
 
-          {/* Small name label — above the headline, per the site-wide
-              eyebrow pattern (small text + a brand-purple accent). */}
-          <span
-            className="animate-rise mt-6 inline-flex items-center gap-2 text-sm font-semibold text-text-secondary"
-            style={{ animationDelay: "60ms" }}
-          >
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand" />
-            {site.name}
-          </span>
-
           <h1
-            className="animate-rise mt-3 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl"
-            style={{ animationDelay: "120ms" }}
+            className="animate-rise mt-5 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl"
+            style={{ animationDelay: "80ms" }}
           >
             {site.heroHeadline}
           </h1>
 
           <p
             className="animate-rise mt-5 max-w-2xl text-lg text-text-secondary"
-            style={{ animationDelay: "180ms" }}
+            style={{ animationDelay: "160ms" }}
           >
             {site.tagline}
           </p>
