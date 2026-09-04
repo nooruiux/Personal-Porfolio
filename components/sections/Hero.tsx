@@ -47,10 +47,10 @@ export function Hero() {
           </span>
 
           <h1
-            className="animate-rise mt-3 text-4xl font-bold tracking-tight text-text-primary sm:text-5xl"
+            className="animate-rise mt-3 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl"
             style={{ animationDelay: "120ms" }}
           >
-            {site.role}
+            {site.heroHeadline}
           </h1>
 
           <p

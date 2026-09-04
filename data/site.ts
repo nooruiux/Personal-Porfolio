@@ -9,10 +9,19 @@ import type { BrandName } from "@/components/ui";
 export const site = {
   name: "Noor Hossain",
   shortName: "Noor",
+  // Short, general-purpose role label — page <title>/metadata, JSON-LD
+  // Person.jobTitle, the OG image, and the footer all pull from this, so it
+  // stays a short job-title-style string (not the long Hero headline below).
   role: "UI/UX Designer & Web Developer",
-  // One-line value proposition shown in the hero.
+  // The Hero's large headline. Deliberately a separate field from `role`:
+  // this is long, service-list marketing copy meant to be read as a big
+  // headline, not reused anywhere a short label is expected.
+  heroHeadline:
+    "Website, Webflow, Framer, WordPress & Product Design for Startups & B2B",
+  // Subheadline directly below heroHeadline in the Hero (also reused as the
+  // OG image's supporting line).
   tagline:
-    "I craft intuitive, visually captivating interfaces — and build them into fast, accessible websites and apps.",
+    "I design and build high-converting websites for startups and growing B2B companies — from strategy and UX/UI to Webflow, Framer, and WordPress development.",
   // Longer positioning line used in metadata / About.
   summary:
     "Passionate UI/UX designer with 4+ years of experience blending aesthetics with functionality to create seamless user experiences. My work spans website and mobile/tablet app UI/UX, wireframing, and prototyping — always focused on usability, visual craft, and a great end-to-end experience.",
