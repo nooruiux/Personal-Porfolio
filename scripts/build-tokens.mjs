@@ -94,6 +94,8 @@ for (const [k, tok] of entries(t.radius))
   rootLines.push([`--radius-${kebab(k)}`, val(tok)]);
 for (const [k, tok] of entries(t.shadow))
   rootLines.push([`--shadow-${kebab(k)}`, val(tok)]);
+for (const [k, tok] of entries(t.gradient))
+  rootLines.push([`--gradient-${kebab(k)}`, val(tok)]);
 
 // Motion
 for (const [k, tok] of entries(t.motion.duration))
@@ -178,6 +180,7 @@ const tsObj = {
   space: mapVars(t.space, "--space"),
   radius: mapVars(t.radius, "--radius"),
   shadow: mapVars(t.shadow, "--shadow"),
+  gradient: mapVars(t.gradient, "--gradient"),
   motion: {
     duration: mapVars(t.motion.duration, "--motion-duration"),
     loop: mapVars(t.motion.loop, "--motion-loop"),

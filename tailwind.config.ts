@@ -50,6 +50,9 @@ export default {
       spacing: mutable(tokens.space),
       borderRadius: mutable(tokens.radius),
       boxShadow: mutable(tokens.shadow),
+      backgroundImage: {
+        "primary-cta": tokens.gradient.primaryCta,
+      },
       transitionDuration: mutable(tokens.motion.duration),
       transitionTimingFunction: mutable(tokens.motion.ease),
       // Icon sizing helpers (w-icon-md / h-icon-md).
