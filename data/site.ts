@@ -36,7 +36,7 @@ export const site = {
   email: "noorxtk@gmail.com",
   phone: "+8801913264543",
   resumePath: "/resume.pdf",
-  url: "https://noorhossain.com", // TODO: set real production domain before deploy
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://personal-porfolio-smoky-seven.vercel.app")),
 
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/noorxtk/", brand: "linkedin" as BrandName },
