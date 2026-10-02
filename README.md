@@ -28,6 +28,7 @@ Personal portfolio website of **Noor Hossain**, a UI/UX designer and front-end d
 
 Available for **freelance & full-time** work: UI/UX design, Figma-to-code, landing pages, SaaS websites, Webflow, Framer and WordPress.
 
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat_now-25D366?style=flat-square&logo=whatsapp&logoColor=white)](https://wa.me/8801913264543)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-noorxtk-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/noorxtk/)
 [![Behance](https://img.shields.io/badge/Behance-noorxtk-1769FF?style=flat-square&logo=behance&logoColor=white)](https://www.behance.net/noorxtk)
 [![Dribbble](https://img.shields.io/badge/Dribbble-Noorxtk-EA4C89?style=flat-square&logo=dribbble&logoColor=white)](https://dribbble.com/Noorxtk)
