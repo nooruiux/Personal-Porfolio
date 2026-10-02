@@ -1,10 +1,37 @@
-# Noor Personal Portfolio
+<div align="center">
 
-Personal portfolio site for **Noor Hossain** — UI/UX Designer & Web Developer.
-Built as a **token-driven design system** so any developer can restyle or extend
-it without reverse-engineering decisions: every visual value (color, type,
-spacing, radius, shadow, motion) lives in design tokens, and components are
-self-contained and documented.
+# Noor Hossain — UI/UX Designer & Front-End Developer Portfolio
+
+Personal portfolio website of **Noor Hossain**, a UI/UX designer and front-end developer from Dhaka, Bangladesh — designing and building high-converting websites for startups and B2B companies with **Next.js, Webflow, Framer and WordPress**.
+
+[![Live Portfolio](https://img.shields.io/badge/Live_Portfolio-Visit_Site-22C55E?style=for-the-badge&logo=vercel&logoColor=white)](https://personal-porfolio-smoky-seven.vercel.app)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+
+<img src=".github/preview.jpg" alt="Noor Hossain portfolio — hero section: Website, Webflow, Framer, WordPress and product design for startups and B2B" width="100%" />
+
+</div>
+
+## ✨ Highlights
+
+- ✅ **Token-driven design system** — every colour, type, spacing, radius, shadow and motion value lives in design tokens (W3C DTCG format, Tokens Studio–compatible)
+- ✅ Light / dark theme toggle
+- ✅ About, Skills, Work (case studies) and Contact sections with booking CTA
+- ✅ Subtle, reduced-motion-aware animations with Framer Motion
+- ✅ Validated contact form (React Hook Form + Zod)
+- ✅ Self-contained, documented components — easy for any developer to restyle or extend
+- ✅ Fast, responsive and SEO-friendly, deployed on Vercel
+
+## 💼 Hire me
+
+Available for **freelance & full-time** work: UI/UX design, Figma-to-code, landing pages, SaaS websites, Webflow, Framer and WordPress.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-noorxtk-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/noorxtk/)
+[![Behance](https://img.shields.io/badge/Behance-noorxtk-1769FF?style=flat-square&logo=behance&logoColor=white)](https://www.behance.net/noorxtk)
+[![Dribbble](https://img.shields.io/badge/Dribbble-Noorxtk-EA4C89?style=flat-square&logo=dribbble&logoColor=white)](https://dribbble.com/Noorxtk)
+[![GitHub](https://img.shields.io/badge/GitHub-nooruiux-181717?style=flat-square&logo=github)](https://github.com/nooruiux)
 
 ---
 
@@ -168,3 +195,5 @@ NEXT_PUBLIC_CONTACT_ENDPOINT=https://formspree.io/f/xxxxxxx
 
 > Run Lighthouse (mobile) against a production build (`npm run build && npm start`)
 > to verify the ≥ 90 performance target on the target host.
+
+<sub>Keywords: UI/UX designer portfolio, front-end developer portfolio, Next.js portfolio template, design system, design tokens, Webflow designer, Framer designer, WordPress developer, Bangladesh.</sub>
